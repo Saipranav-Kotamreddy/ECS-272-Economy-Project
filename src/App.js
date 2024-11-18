@@ -1,23 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import UrbanChart from './components/UrbanChart.js'
+import ChoosePeriod from './components/choosePeriod.js'
+import IndustryChart from './components/IndustryChart';
+import CarbonChart from './components/CarbonChart';
+
+import React, { useState, useRef, useEffect } from "react";
+
 
 function App() {
+
+  const [period, setPeriod] = useState('1810');
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ChoosePeriod setPeriod={setPeriod}/>
+      <UrbanChart period={period}/>
+      <IndustryChart startYear={1840} endYear={2000}/>
+      <CarbonChart startYear={1840} endYear={1910}/>
     </div>
   );
 }
