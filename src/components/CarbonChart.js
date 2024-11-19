@@ -29,7 +29,7 @@ const CarbonChart = ({ startYear, endYear }) => {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
-    const margin = { top: 20, right: 30, bottom: 30, left: 40 };
+    const margin = { top: 30, right: 30, bottom: 50, left: 40 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -105,6 +105,35 @@ const CarbonChart = ({ startYear, endYear }) => {
       .on("mouseout", () => {
         tooltip.style("opacity", 0);
       });
+
+      // Add title
+    svg
+    .append("text")
+    .attr("x", width / 2)
+    .attr("y", margin.top / 2)
+    .attr("text-anchor", "middle")
+    .style("font-size", "16px")
+    .style("font-weight", "bold")
+    .text("CO2 Emmissions over Time");
+
+    // Add x-axis label
+    svg
+    .append("text")
+    .attr("x", width / 2)
+    .attr("y", height - 10)
+    .attr("text-anchor", "middle")
+    .style("font-size", "12px")
+    .text("Year");
+
+    // Add y-axis label
+    svg
+    .append("text")
+    .attr("x", -height / 2)
+    .attr("y", 20)
+    .attr("text-anchor", "middle")
+    .attr("transform", "rotate(-90)")
+    .style("font-size", "12px")
+    .text("CO2 Emmissions per Capita(Tons)");
   }, [carbonData]);
 
   return <svg ref={svgRef} width={width} height={height}></svg>;

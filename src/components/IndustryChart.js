@@ -9,9 +9,9 @@ const IndustryChart = ({ startYear, endYear }) => {
     const fetchData = async () => {
       const csvData = await d3.csv("data/metricsbydecade.csv", (d) => ({
         decade: d["Decade"],
-        agriculture: parseInt(d["TotalAgriculture"]),
-        manufacture: parseInt(d["TotalManufacturing"]),
-        service: parseInt(d["TotalService"])
+        agriculture: parseInt(d["TotalAgriculture"])/1000000,
+        manufacture: parseInt(d["TotalManufacturing"])/1000000,
+        service: parseInt(d["TotalService"])/1000000
       }));
 
       let dataList=[]
@@ -31,8 +31,8 @@ const IndustryChart = ({ startYear, endYear }) => {
     if (!industryData || industryData.length === 0) return;
   
     console.log(industryData)
-    const margin = { top: 20, right: 30, bottom: 30, left: 70 };
-    const width = 800 - margin.left - margin.right;
+    const margin = { top: 20, right: 30, bottom: 50, left: 100 };
+    const width = 900 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
   
     // Prepare SVG
@@ -105,6 +105,35 @@ const IndustryChart = ({ startYear, endYear }) => {
     svg.append("g").call(
         d3.axisLeft(yScale).tickFormat(d3.format(",.0f")) // Format as integer with commas
       );
+
+      // Add title
+  svg
+  .append("text")
+  .attr("x", width / 2)
+  .attr("y", margin.top / 2)
+  .attr("text-anchor", "middle")
+  .style("font-size", "16px")
+  .style("font-weight", "bold")
+  .text("Industry Employment Rate per Decade");
+
+// Add x-axis label
+svg
+  .append("text")
+  .attr("x", width / 2)
+  .attr("y", height + 30)
+  .attr("text-anchor", "middle")
+  .style("font-size", "12px")
+  .text("Decade");
+
+// Add y-axis label
+svg
+  .append("text")
+  .attr("x", -height / 2)
+  .attr("y", -40)
+  .attr("text-anchor", "middle")
+  .attr("transform", "rotate(-90)")
+  .style("font-size", "12px")
+  .text("Number of People Employed(Millions of People)");
     // Cleanup on component unmount
     return () => {
       svg.selectAll("*").remove();

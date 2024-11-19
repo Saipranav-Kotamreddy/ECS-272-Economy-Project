@@ -51,8 +51,8 @@ const UrbanChart = ({ period }) => {
       for (let i = 0; i < d.count; i++) {
         svg
           .append("foreignObject")
-          .attr("x", x * colSpacing + 10)
-          .attr("y", y * rowSpacing + 10)
+          .attr("x", x * colSpacing + 150)
+          .attr("y", y * rowSpacing + 40)
           .attr("width", 20)
           .attr("height", 20)
           .html(personIcon)
@@ -65,6 +65,14 @@ const UrbanChart = ({ period }) => {
         }
       }
     });
+    svg
+  .append("text")
+  .attr("x", svgWidth / 2)
+  .attr("y", 20)
+  .attr("text-anchor", "middle")
+  .style("font-size", "16px")
+  .style("font-weight", "bold")
+  .text("Urban vs Rural Percentages Per Period");
   }, [populationData]);
 
   return <svg ref={chartRef}></svg>;
