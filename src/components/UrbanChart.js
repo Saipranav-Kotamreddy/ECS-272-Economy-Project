@@ -18,7 +18,7 @@ const UrbanChart = ({ period }) => {
         const { urban, rural } = matchedData;
 
         const data = [
-        { region: "Urban", count: urban, color: "#9B59B6" },
+          { region: "Urban", count: urban, color: "#9B59B6" },
           { region: "Rural", count: rural, color: "#F39C12" },
         ];
         setPopulationData(data);
@@ -65,14 +65,36 @@ const UrbanChart = ({ period }) => {
         }
       }
     });
+
+    // Add title
     svg
-  .append("text")
-  .attr("x", svgWidth / 2)
-  .attr("y", 20)
-  .attr("text-anchor", "middle")
-  .style("font-size", "16px")
-  .style("font-weight", "bold")
-  .text("Urban vs Rural Percentages Per Period");
+      .append("text")
+      .attr("x", svgWidth / 2)
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("font-weight", "bold")
+      .text("Urban vs Rural Percentages Per Period");
+
+    // Add legend
+    const legend = svg.append("g").attr("transform", `translate(500, 50)`);
+
+    populationData.forEach((d, i) => {
+      const legendItem = legend.append("g").attr("transform", `translate(0, ${i * 25})`);
+
+      legendItem
+        .append("rect")
+        .attr("width", 20)
+        .attr("height", 20)
+        .attr("fill", d.color);
+
+      legendItem
+        .append("text")
+        .attr("x", 30)
+        .attr("y", 15)
+        .style("font-size", "14px")
+        .text(d.region);
+    });
   }, [populationData]);
 
   return <svg ref={chartRef}></svg>;

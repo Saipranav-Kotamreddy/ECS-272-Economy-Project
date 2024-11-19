@@ -19,7 +19,7 @@ function App() {
       <UrbanChart period={period}/>
       <IndustryChart startYear={1840} endYear={2000}/>
       <CarbonChart startYear={1840} endYear={1910}/>
-      <ImmigrationChart startYear={1790} endYear={1920}/>
+      <ImmigrationChart startYear={1790} endYear={2000}/>
     </div>
   );
 }

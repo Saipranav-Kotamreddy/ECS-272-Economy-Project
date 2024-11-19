@@ -54,9 +54,10 @@ const CarbonChart = ({ startYear, endYear }) => {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    g.append("g")
-      .call(d3.axisBottom(xScale).ticks(6))
+      g.append("g")
+      .call(d3.axisBottom(xScale).ticks(6).tickFormat(d3.format("d")))
       .attr("transform", `translate(0,${innerHeight})`);
+    
 
     g.append("g").call(d3.axisLeft(yScale));
 

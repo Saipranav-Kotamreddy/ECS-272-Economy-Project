@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-const ImmigrationChart = ({startYear, endYear}) => {
+const ImmigrationChart = ({ startYear, endYear }) => {
   const svgRef = useRef();
   const [immigrantData, setImmigrantData] = useState([]);
 
@@ -9,13 +9,19 @@ const ImmigrationChart = ({startYear, endYear}) => {
     const fetchData = async () => {
       const csvData = await d3.csv("data/metricsbydecade.csv", (d) => ({
         decade: d["Decade"],
-        immigrant: parseFloat(d["PercPopGrowthImm"])
+        immigrant: parseFloat(d["PercPopGrowthImm"]),
       }));
 
-      let dataList=[]
-      for(let row in csvData){
-        if(parseInt(csvData[row].decade)>=startYear && parseInt(csvData[row].decade)<=endYear){
-            dataList.push({"decade":csvData[row].decade,"immigrant": csvData[row].immigrant,})
+      let dataList = [];
+      for (let row in csvData) {
+        if (
+          parseInt(csvData[row].decade) >= startYear &&
+          parseInt(csvData[row].decade) <= endYear
+        ) {
+          dataList.push({
+            decade: csvData[row].decade,
+            immigrant: csvData[row].immigrant,
+          });
         }
       }
       setImmigrantData(dataList);
@@ -23,10 +29,11 @@ const ImmigrationChart = ({startYear, endYear}) => {
 
     fetchData();
   }, [startYear, endYear]);
+
   useEffect(() => {
-    const width = 800;
+    const width = 750;
     const height = 450;
-    const margin = { top: 25, right: 30, bottom: 50, left: 50 };
+    const margin = { top: 25, right: 100, bottom: 50, left: 50 };
 
     // Clear the SVG
     d3.select(svgRef.current).selectAll("*").remove();
@@ -38,7 +45,10 @@ const ImmigrationChart = ({startYear, endYear}) => {
       .range([margin.left, width - margin.right])
       .padding(0.1);
 
-    const yScale = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
+    const yScale = d3
+      .scaleLinear()
+      .domain([0, 100])
+      .range([height - margin.bottom, margin.top]);
 
     // Define the line
     const line = d3
@@ -102,34 +112,62 @@ const ImmigrationChart = ({startYear, endYear}) => {
       .append("g")
       .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(yScale));
-  // Add title
-  svg
-    .append("text")
-    .attr("x", width / 2)
-    .attr("y", margin.top / 2)
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .style("font-weight", "bold")
-    .text("Immigrants vs Native Born in the United States");
 
-  // Add x-axis label
-  svg
-    .append("text")
-    .attr("x", width / 2)
-    .attr("y", height - 10)
-    .attr("text-anchor", "middle")
-    .style("font-size", "12px")
-    .text("Decade");
+    // Add title
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", margin.top / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "16px")
+      .style("font-weight", "bold")
+      .text("Immigrants vs Native Born in the United States");
 
-  // Add y-axis label
-  svg
-    .append("text")
-    .attr("x", -height / 2)
-    .attr("y", 20)
-    .attr("text-anchor", "middle")
-    .attr("transform", "rotate(-90)")
-    .style("font-size", "12px")
-    .text("Percentage(%)");
+    // Add x-axis label
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", height - 10)
+      .attr("text-anchor", "middle")
+      .style("font-size", "12px")
+      .text("Year");
+
+    // Add y-axis label
+    svg
+      .append("text")
+      .attr("x", -height / 2)
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
+      .attr("transform", "rotate(-90)")
+      .style("font-size", "12px")
+      .text("Percentage(%)");
+
+    // Add legend
+    const legend = svg.append("g").attr("transform", `translate(${width-margin.right}, ${margin.top})`);
+
+    const legendData = [
+      { label: "Native Born", color: "lavender" },
+      { label: "Immigrants", color: "lightgreen" },
+    ];
+
+    legendData.forEach((d, i) => {
+      const legendRow = legend
+        .append("g")
+        .attr("transform", `translate(0, ${i * 20})`);
+
+      legendRow
+        .append("rect")
+        .attr("width", 15)
+        .attr("height", 15)
+        .attr("fill", d.color);
+
+      legendRow
+        .append("text")
+        .attr("x", 20)
+        .attr("y", 12)
+        .style("font-size", "12px")
+        .text(d.label);
+    });
   }, [immigrantData]);
 
   return <svg ref={svgRef}></svg>;
