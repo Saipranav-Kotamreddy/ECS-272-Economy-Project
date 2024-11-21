@@ -1,25 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as d3 from "d3";
 
-const UrbanChart = ({ period }) => {
+const GenderChart = ({ period }) => {
   const chartRef = useRef();
   const [populationData, setPopulationData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const csvData = await d3.csv("data/urbanmetrics.csv", (d) => ({
+      const csvData = await d3.csv("data/gendermetrics.csv", (d) => ({
         year: d["Year"],
-        urban: parseInt(d["Urban"]),
-        rural: parseInt(d["Rural"]),
+        female: parseInt(d["Female"]),
+        male: parseInt(d["Male"]),
       }));
 
       const matchedData = csvData.find((row) => row.year === period);
       if (matchedData) {
-        const { urban, rural } = matchedData;
+        const { female, male } = matchedData;
 
         const data = [
-          { region: "Urban", count: urban, color: "#9B59B6" },
-          { region: "Rural", count: rural, color: "#F39C12" },
+          { region: "Female", count: female, color: "#FFC0CB" },
+          { region: "Male", count: male, color: "#0080FE" },
         ];
         setPopulationData(data);
       }
@@ -74,7 +74,7 @@ const UrbanChart = ({ period }) => {
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")
-      .text("Urban vs Rural Percentages In " + period);
+      .text("Gender Distribution in "+period);
 
     // Add legend
     const legend = svg.append("g").attr("transform", `translate(500, 50)`);
@@ -100,4 +100,4 @@ const UrbanChart = ({ period }) => {
   return <svg ref={chartRef}></svg>;
 };
 
-export default UrbanChart;
+export default GenderChart;
