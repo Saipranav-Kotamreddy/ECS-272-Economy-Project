@@ -96,16 +96,20 @@ const IndustryChart = ({ startYear, endYear }) => {
       .y1((d) => yScale(d[1]))
       .curve(d3.curveBasis);
 
-    // Draw layers
-    chartGroup
+      chartGroup
       .selectAll(".layer")
       .data(stackedData)
       .join("path")
       .attr("class", "layer")
       .attr("d", area)
-      .attr("fill", (d) => colorScale(d.key))
+      .attr("fill", (d) => {
+        const color = d3.color(colorScale(d.key));
+        color.opacity = 0.8;
+        return color.toString();
+      })
       .attr("stroke", "black")
       .attr("stroke-width", 0.5);
+    
 
     // Add X Axis
     chartGroup

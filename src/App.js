@@ -5,6 +5,7 @@ import ChoosePeriod from './components/choosePeriod.js'
 import IndustryChart from './components/IndustryChart';
 import CarbonChart from './components/CarbonChart';
 import ImmigrationChart from './components/ImmigrationChart';
+import IncomeChart from './components/IncomeChart';
 
 import React, { useState, useRef, useEffect } from "react";
 
@@ -20,6 +21,7 @@ function App() {
       <IndustryChart startYear={1840} endYear={2000}/>
       <CarbonChart startYear={1840} endYear={1910}/>
       <ImmigrationChart startYear={1790} endYear={2000}/>
+      <IncomeChart startYear={1910} endYear={2000}/>
     </div>
   );
 }
