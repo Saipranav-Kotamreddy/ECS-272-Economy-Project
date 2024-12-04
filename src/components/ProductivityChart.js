@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-const ProductivityChart = ({startYear, endYear}) => {
+const ProductivityChart = ({startYear, endYear, size}) => {
   const svgRef = useRef();
   const [productivityData, setProductivityData] = useState([]);
   const [wageData, setWageData] = useState([]);
@@ -48,9 +48,26 @@ const ProductivityChart = ({startYear, endYear}) => {
   useEffect(() => {
 
     // Set dimensions and margins
-    const width = 600;
-    const height = 400;
-    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    let width = 400;
+    let height = 400;
+    if (size=='small') {
+      width = 450;
+      height=200;
+    } else if (size=='medium') {
+      width = 650;
+      height = 250;    
+    }
+
+    
+    let margin = { top: 50, right: 190, bottom: 50, left: 50 };
+
+    if(size=='small') {
+      margin = { top: 50, right: 100, bottom: 50, left: 50 };
+    }
+
+    if (size=='medium') {
+      margin = { top: 50, right: 175, bottom: 50, left:50 };
+    }
 
     const svg = d3
       .select(svgRef.current)
@@ -128,6 +145,7 @@ const ProductivityChart = ({startYear, endYear}) => {
       .attr("y", margin.top / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
+      .style("font-weight", "bold")
       .text("Productivity vs Wage Increases over Time");
 
     svg
@@ -148,7 +166,7 @@ const ProductivityChart = ({startYear, endYear}) => {
       .text("Percentage");
 
     // Add legend
-    const legend = svg.append("g").attr("transform", `translate(${width - 150},${margin.top})`);
+    const legend = svg.append("g").attr("transform", `translate(${width - 80},${margin.top})`);
 
     legend
       .append("rect")
@@ -181,6 +199,8 @@ const ProductivityChart = ({startYear, endYear}) => {
       .attr("text-anchor", "start")
       .style("font-size", "12px")
       .text("Wages");
+
+    
   }, [productivityData, wageData]);
 
   return <svg ref={svgRef}></svg>;

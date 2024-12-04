@@ -1,13 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-const CarbonChart = ({ startYear, endYear }) => {
+const CarbonChart = ({ startYear, endYear, size}) => {
   const svgRef = useRef();
   const [carbonData, setCarbonData] = useState([]);
 
-  const width = 600;
-  const height = 500;
-
+  
+  let width = 600;
+  let height = 500;
+  let font1 = "16px";
+  let font2 = "12px";
+  if (size=='small') {
+    width = 400;
+    height=200;
+  } else if(size=='medium') {
+    width = 500;
+    height = 250;
+    font1 = "16px";
+    font2 = "12px";    
+  }
   useEffect(() => {
     const fetchData = async () => {
       const csvData = await d3.csv("data/metricsbyyear.csv", (d) => ({
@@ -113,7 +124,7 @@ const CarbonChart = ({ startYear, endYear }) => {
     .attr("x", width / 2)
     .attr("y", margin.top / 2)
     .attr("text-anchor", "middle")
-    .style("font-size", "16px")
+    .style("font-size", font1)
     .style("font-weight", "bold")
     .text("CO2 Emmissions over Time");
 
@@ -121,19 +132,19 @@ const CarbonChart = ({ startYear, endYear }) => {
     svg
     .append("text")
     .attr("x", width / 2)
-    .attr("y", height - 10)
+    .attr("y", height - 15)
     .attr("text-anchor", "middle")
-    .style("font-size", "12px")
+    .style("font-size", font2)
     .text("Year");
 
     // Add y-axis label
     svg
     .append("text")
-    .attr("x", -height / 2)
-    .attr("y", 20)
+    .attr("x", (-height+10) / 2)
+    .attr("y", 15)
     .attr("text-anchor", "middle")
     .attr("transform", "rotate(-90)")
-    .style("font-size", "12px")
+    .style("font-size", font2)
     .text("CO2 Emmissions per Capita(Tons)");
   }, [carbonData]);
 

@@ -28,6 +28,110 @@
   color: #61dafb;
 }
 
+.incomeMed {
+  margin-left: 60px;
+}
+
+.prodMed {
+  margin-left: 120px;
+}
+
+.prodLarge {
+  margin-left: 10px;
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+}
+
+.col2 {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  justify-items: center;
+  align-self: center;
+  align-items: center;
+}
+
+.col3 {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.industry {
+  margin-left: 30px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+}
+
+.row2 {
+  display: flex;
+  flex-direction: row;
+  margin-top: -20px;
+  justify-content: center;
+}
+
+.full {
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  justify-items: center;
+  align-self: center;
+  align-items: center;
+  margin-top: 10vh;
+}
+
+.fade-out {
+  opacity: 1;
+  transition: opacity .01s ease-in-out;
+}
+
+
+.fade-out.hidden {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  margin: 0;
+}
+
+.focused1 {
+  position: absolute;
+  top: 0%;
+  left: 24%;
+  transition: transform 5s;;
+  transform: translate(0%, 50%) scale(1.4); /* Adjust scale as needed */
+}
+
+.focused2 {
+  position: absolute;
+  top: 33%;
+  left: 22%;
+  transition: transform 5s;;
+  transform: translate(50%, -25%) scale(1.4); /* Adjust scale as needed */
+}
+
+.focused3 {
+  position: absolute;
+  top: 33%;
+  left: 47%;
+  transition: transform 5s;;
+  transform: translate(-47%, -20%) scale(1.4); /* Adjust scale as needed */
+
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

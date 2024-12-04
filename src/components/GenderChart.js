@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as d3 from "d3";
 
-const GenderChart = ({ period }) => {
+const GenderChart = ({ period, size}) => {
   const chartRef = useRef();
   const [populationData, setPopulationData] = useState([]);
 
@@ -29,11 +29,36 @@ const GenderChart = ({ period }) => {
   }, [period]);
 
   useEffect(() => {
-    const svgWidth = 600;
-    const svgHeight = 500;
-    const rowSpacing = 30;
-    const colSpacing = 30;
-    const maxPerRow = 10;
+    
+    let svgWidth = 350;
+    let svgHeight = 350;
+    let rowSpacing = 30;
+    let colSpacing = 30;
+    let maxPerRow = 10;
+    let iconsize = 20;
+    let iconx = 30;
+    let icony = 40;
+
+    if (size=='small') {
+      svgWidth = 200;
+      svgHeight = 150; 
+      iconsize = 5;  
+      rowSpacing = 12;
+      colSpacing = 12;
+      maxPerRow = 10; 
+      iconsize = 10;  
+      icony = 20;
+      iconx = 35;
+    } else if(size=='medium') {
+      svgWidth = 300;
+      svgHeight = 230; 
+      rowSpacing = 20;
+      colSpacing = 20;
+      maxPerRow = 10; 
+      iconsize = 10;  
+      icony = 20;
+      iconx = 50;      
+    }
 
     const svg = d3
       .select(chartRef.current)
@@ -45,16 +70,16 @@ const GenderChart = ({ period }) => {
     let x = 0,
       y = 0;
 
-    const personIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="20" height="20"><path fill="currentColor" d="M32 2a14 14 0 1014 14A14 14 0 0032 2zm12 36H20a12 12 0 00-12 12v8a4 4 0 004 4h48a4 4 0 004-4v-8a12 12 0 00-12-12z"/></svg>`;
+    const personIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="${iconsize}" height="${iconsize}"><path fill="currentColor" d="M32 2a14 14 0 1014 14A14 14 0 0032 2zm12 36H20a12 12 0 00-12 12v8a4 4 0 004 4h48a4 4 0 004-4v-8a12 12 0 00-12-12z"/></svg>`;
 
     populationData.forEach((d) => {
       for (let i = 0; i < d.count; i++) {
         svg
           .append("foreignObject")
-          .attr("x", x * colSpacing + 150)
-          .attr("y", y * rowSpacing + 40)
-          .attr("width", 20)
-          .attr("height", 20)
+          .attr("x", x * colSpacing + iconx)
+          .attr("y", y * rowSpacing + icony)
+          .attr("width", iconsize+15)
+          .attr("height", iconsize+15)
           .html(personIcon)
           .style("color", d.color);
 
@@ -67,6 +92,7 @@ const GenderChart = ({ period }) => {
     });
 
     // Add title
+    if (size != 'small') {
     svg
       .append("text")
       .attr("x", svgWidth / 2)
@@ -75,7 +101,15 @@ const GenderChart = ({ period }) => {
       .style("font-size", "16px")
       .style("font-weight", "bold")
       .text("Gender Distribution in "+period);
-
+    } else {
+      svg.append("text")
+      .attr("x", svgWidth / 2)
+      .attr("y", 20)
+      .attr("text-anchor", "middle")
+      .style("font-size", "8px")
+      .style("font-weight", "bold")
+      .text("Gender Distribution in "+period);      
+    }
     // Add legend
     const legend = svg.append("g").attr("transform", `translate(500, 50)`);
 

@@ -1,10 +1,20 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 
-const IncomeChart = ({ startYear, endYear }) => {
+const IncomeChart = ({ startYear, endYear, size }) => {
   const svgRef = useRef();
-  let width = 1000;
+  let width = 800;
   let height = 500;
+  let yoffset=0;
+
+  if (size=='small') {
+    width=450;
+    height=190;
+  } else if (size=='medium') {
+    width=600;
+    height=250;
+    yoffset=0;
+  }
   const [incomeData, setIncomeData] = useState([]);
 
   useEffect(() => {
@@ -41,7 +51,13 @@ const IncomeChart = ({ startYear, endYear }) => {
   useEffect(() => {
     const svg = d3.select(svgRef.current).attr("width", width).attr("height", height);
 
-    const margin = { top: 50, right: 30, bottom: 80, left: 60 }; // Adjusted margins for labels
+    let margin = { top: 25, right: 120, bottom: 35, left: 60 }; // Adjusted margins for labels
+    if (size=='small') {
+      margin = { top: 25, right: 100, bottom: 35, left: 60 };
+    }
+    else if (size=='medium') {
+      margin = { top: 25, right: 120, bottom: 50, left: 60 }; // Adjusted margins for labels
+    }
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -137,7 +153,7 @@ const IncomeChart = ({ startYear, endYear }) => {
       .attr("text-anchor", "middle");
 
     // Add legend
-    const legendGroup = svg.append("g").attr("transform", `translate(${width - 200}, 20)`);
+    const legendGroup = svg.append("g").attr("transform", `translate(${width - 90}, 20)`);
 
     legendGroup
       .selectAll("rect")
@@ -149,7 +165,7 @@ const IncomeChart = ({ startYear, endYear }) => {
       .attr("height", 15)
       .attr("fill", (d) => colorScale(d));
 
-    const legendLabels = ["Top 5-10% Income", "Top 1-5% Income", "Top 1% Income"];
+    const legendLabels = ["Top 5-10%", "Top 1-5%", "Top 1%"];
 
     legendGroup
       .selectAll("text")
@@ -160,14 +176,15 @@ const IncomeChart = ({ startYear, endYear }) => {
       .text((d) => d)
       .style("font-size", "12px")
       .attr("alignment-baseline", "middle");
+  
 
     // Add chart title
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", 20)
+      .attr("y", 15)
       .attr("text-anchor", "middle")
-      .style("font-size", "18px")
+      .style("font-size", "12px")
       .style("font-weight", "bold")
       .text("Income Share Distribution Over Time");
 
@@ -175,16 +192,16 @@ const IncomeChart = ({ startYear, endYear }) => {
     svg
       .append("text")
       .attr("x", width / 2)
-      .attr("y", height - 20)
+      .attr("y", height)
       .attr("text-anchor", "middle")
-      .style("font-size", "14px")
+      .style("font-size", "12px")
       .text("Year");
 
     // Add y-axis label
     svg
       .append("text")
-      .attr("x", -(height / 2))
-      .attr("y", 15)
+      .attr("x", -(height / 2 + -15))
+      .attr("y", 15+yoffset)
       .attr("transform", "rotate(-90)")
       .attr("text-anchor", "middle")
       .style("font-size", "14px")

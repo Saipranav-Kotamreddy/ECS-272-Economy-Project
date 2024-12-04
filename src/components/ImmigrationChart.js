@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 
-const ImmigrationChart = ({ startYear, endYear }) => {
+const ImmigrationChart = ({ startYear, endYear, size }) => {
   const svgRef = useRef();
   const [immigrantData, setImmigrantData] = useState([]);
 
@@ -31,10 +31,17 @@ const ImmigrationChart = ({ startYear, endYear }) => {
   }, [startYear, endYear]);
 
   useEffect(() => {
-    const width = 750;
-    const height = 450;
-    const margin = { top: 25, right: 100, bottom: 50, left: 50 };
+    let width = 600;
+    let height = 450;
+    const margin = { top: 25, right: 75, bottom: 50, left: 50 };
 
+    if (size=='small') {
+      width=400;
+      height=200;
+    } else if(size=='medium') {
+      width=500;
+      height=250;      
+    }
     // Clear the SVG
     d3.select(svgRef.current).selectAll("*").remove();
 
@@ -119,7 +126,7 @@ const ImmigrationChart = ({ startYear, endYear }) => {
       .attr("x", width / 2)
       .attr("y", margin.top / 2)
       .attr("text-anchor", "middle")
-      .style("font-size", "16px")
+      .style("font-size", "12px")
       .style("font-weight", "bold")
       .text("Immigrants vs Native Born in the United States");
 
@@ -143,10 +150,11 @@ const ImmigrationChart = ({ startYear, endYear }) => {
       .text("Percentage(%)");
 
     // Add legend
+
     const legend = svg.append("g").attr("transform", `translate(${width-margin.right}, ${margin.top})`);
 
     const legendData = [
-      { label: "Native Born", color: "lavender" },
+      { label: "Native", color: "lavender" },
       { label: "Immigrants", color: "lightgreen" },
     ];
 
@@ -168,6 +176,7 @@ const ImmigrationChart = ({ startYear, endYear }) => {
         .style("font-size", "12px")
         .text(d.label);
     });
+  
   }, [immigrantData]);
 
   return <svg ref={svgRef}></svg>;

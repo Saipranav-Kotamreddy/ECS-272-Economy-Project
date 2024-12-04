@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 
-const IndustryChart = ({ startYear, endYear }) => {
+const IndustryChart = ({ startYear, endYear, size }) => {
   const svgRef = useRef();
   const [industryData, setIndustryData] = useState([]);
 
@@ -44,9 +44,20 @@ const IndustryChart = ({ startYear, endYear }) => {
   useEffect(() => {
     if (!industryData || industryData.length === 0) return;
 
-    const margin = { top: 30, right: 180, bottom: 50, left: 60 };
-    const width = 900 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
+    let margin = { top: 30, right: 95, bottom: 50, left: 95 };
+    let width = 900 - margin.left - margin.right;
+    let height = 500 - margin.top - margin.bottom;
+    let axisfont="16px"
+    let xoffset = 0;
+    let yoffset = 0;
+    if (size=='small') {
+      margin = { top: 30, right: 97, bottom: 50, left: 60 };
+      width = 800 - margin.left - margin.right;
+      height = 250 - margin.top - margin.bottom;
+      axisfont="12px"
+      xoffset=-10;
+      yoffset=15;
+    }
 
     // Prepare SVG
     const svg = d3
@@ -129,24 +140,26 @@ const IndustryChart = ({ startYear, endYear }) => {
       .style("font-size", "16px")
       .style("font-weight", "bold")
       .text("Industry Employment Rate per Decade");
+    
+
 
     // Add x-axis label
     chartGroup
       .append("text")
       .attr("x", width / 2)
-      .attr("y", height + 40)
+      .attr("y", height + 40 + xoffset)
       .attr("text-anchor", "middle")
-      .style("font-size", "12px")
+      .style("font-size", axisfont)
       .text("Year");
 
     // Add y-axis label
     chartGroup
       .append("text")
       .attr("x", -height / 2)
-      .attr("y", -50)
+      .attr("y", -45+yoffset)
       .attr("text-anchor", "middle")
       .attr("transform", "rotate(-90)")
-      .style("font-size", "12px")
+      .style("font-size", axisfont)
       .text("Number of People Employed (Millions)");
 
     // Add legend
