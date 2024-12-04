@@ -49,7 +49,7 @@ const Main = () => {
 	if (page == 0) {
 		return <div className='col'>
 			<div id='1' className={`fade-out ${visible1 ? '' : 'hidden'} ${focus1 ? 'focused1' : ''}`} onClick={show1}>
-				<IndustryChart  className='industry' startYear={1840} endYear={2000} size='small'/>
+				<IndustryChart  className='industry' startYear={1840} endYear={2000} size='small' animated={false} />
 			</div>	
 			<div className='row'>
 					<div id='2' className={`col fade-out ${visible2 ? '' : 'hidden'} ${focus2 ? 'focused2' : ''}`} onClick={show2}>
@@ -79,7 +79,7 @@ const Main = () => {
 	else if (page == 1) {
 		return <div className='col2 full'>
 				<div className='main'>
-				<IndustryChart startYear={1840} endYear={2000}/>
+				<IndustryChart startYear={1840} endYear={2000}  animated={true}/>
 				</div>
 			
 			<button onClick={nextPage}>
@@ -156,7 +156,7 @@ const Main = () => {
 			</div>		
 	} else if (page == 8) {
 		return <div className='col'>
-				<IndustryChart id='1' className='industry' startYear={1840} endYear={2000} size='small' onClick={show1}/>
+				<IndustryChart id='1' className='industry' startYear={1840} endYear={2000} size='small'  animated={false} onClick={show1}/>
 				<div className='row'>
 					<div id='2' className='col' onClick={show2}>
 						<div className='row2'>
