@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as d3 from "d3";
 
-const GenderChart = ({ period, size}) => {
+const GenderChart = ({ period, size, legend}) => {
   const chartRef = useRef();
   const [populationData, setPopulationData] = useState([]);
 
@@ -29,7 +29,6 @@ const GenderChart = ({ period, size}) => {
   }, [period]);
 
   useEffect(() => {
-    
     let svgWidth = 350;
     let svgHeight = 350;
     let rowSpacing = 30;
@@ -38,7 +37,7 @@ const GenderChart = ({ period, size}) => {
     let iconsize = 20;
     let iconx = 30;
     let icony = 40;
-
+    
     if (size=='small') {
       svgWidth = 200;
       svgHeight = 150; 
@@ -57,7 +56,12 @@ const GenderChart = ({ period, size}) => {
       maxPerRow = 10; 
       iconsize = 10;  
       icony = 20;
-      iconx = 50;      
+      iconx = 55;      
+    }
+
+    if (legend) {
+      svgWidth = svgWidth + 225;
+      iconx = iconx + 105;
     }
 
     const svg = d3
@@ -100,7 +104,7 @@ const GenderChart = ({ period, size}) => {
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")
-      .text("Gender Distribution in "+period);
+      .text("Workforce by Gender "+period);
     } else {
       svg.append("text")
       .attr("x", svgWidth / 2)
@@ -111,24 +115,34 @@ const GenderChart = ({ period, size}) => {
       .text("Gender Distribution in "+period);      
     }
     // Add legend
-    const legend = svg.append("g").attr("transform", `translate(500, 50)`);
+    if (legend) {
 
-    populationData.forEach((d, i) => {
-      const legendItem = legend.append("g").attr("transform", `translate(0, ${i * 25})`);
-
-      legendItem
-        .append("rect")
-        .attr("width", 20)
-        .attr("height", 20)
-        .attr("fill", d.color);
-
-      legendItem
-        .append("text")
-        .attr("x", 30)
-        .attr("y", 15)
-        .style("font-size", "14px")
-        .text(d.region);
-    });
+      let legend = svg.append("g");
+      if (size == 'medium') {
+        legend.attr("transform", `translate(400, 30)`);
+      } else if (size=='small') {
+        legend.attr("transform", `translate(275, 30)`);
+      } else {
+        legend.attr("transform", `translate(450, 30)`);
+      }
+      
+      populationData.forEach((d, i) => {
+        const legendItem = legend.append("g").attr("transform", `translate(0, ${i * 25})`);
+  
+        legendItem
+          .append("rect")
+          .attr("width", 15)
+          .attr("height", 15)
+          .attr("fill", d.color);
+  
+        legendItem
+          .append("text")
+          .attr("x", 22)
+          .attr("y", 12)
+          .style("font-size", "12px")
+          .text(d.region);
+      });
+    }
   }, [populationData]);
 
   return <svg ref={chartRef}></svg>;

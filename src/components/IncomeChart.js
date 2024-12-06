@@ -181,7 +181,7 @@ const IncomeChart = ({ startYear, endYear, size }) => {
     // Add chart title
     svg
       .append("text")
-      .attr("x", width / 2)
+      .attr("x", (width-margin.left+15) / 2)
       .attr("y", 15)
       .attr("text-anchor", "middle")
       .style("font-size", "12px")
@@ -189,10 +189,16 @@ const IncomeChart = ({ startYear, endYear, size }) => {
       .text("Income Share Distribution Over Time");
 
     // Add x-axis label
+    let xoffset=2;
+    if (size=='medium') {
+      xoffset = 15
+    }
+    
+    
     svg
       .append("text")
-      .attr("x", width / 2)
-      .attr("y", height)
+      .attr("x", width / 2 -20)
+      .attr("y", height-xoffset)
       .attr("text-anchor", "middle")
       .style("font-size", "12px")
       .text("Year");

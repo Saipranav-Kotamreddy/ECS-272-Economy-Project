@@ -131,7 +131,7 @@ const CarbonChart = ({ startYear, endYear, size}) => {
     // Add x-axis label
     svg
     .append("text")
-    .attr("x", width / 2)
+    .attr("x", width / 2 + 8)
     .attr("y", height - 15)
     .attr("text-anchor", "middle")
     .style("font-size", font2)

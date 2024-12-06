@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as d3 from "d3";
 
-const UrbanChart = ({ period, size }) => {
+const UrbanChart = ({ period, size, legend }) => {
   const chartRef = useRef();
   const [populationData, setPopulationData] = useState([]);
 
@@ -59,6 +59,11 @@ const UrbanChart = ({ period, size }) => {
       iconx = 55;      
     }
 
+    if (legend) {
+      svgWidth = svgWidth + 225;
+      iconx = iconx + 105;
+    }
+
     const svg = d3
       .select(chartRef.current)
       .attr("width", svgWidth)
@@ -113,24 +118,34 @@ const UrbanChart = ({ period, size }) => {
 
 
     // Add legend
-    const legend = svg.append("g").attr("transform", `translate(500, 50)`);
+    if (legend) {
 
+    let legend = svg.append("g");
+    if (size == 'medium') {
+      legend.attr("transform", `translate(400, 30)`);
+    } else if (size=='small') {
+      legend.attr("transform", `translate(275, 30)`);
+    } else {
+      legend.attr("transform", `translate(450, 30)`);
+    }
+    
     populationData.forEach((d, i) => {
       const legendItem = legend.append("g").attr("transform", `translate(0, ${i * 25})`);
 
       legendItem
         .append("rect")
-        .attr("width", 20)
-        .attr("height", 20)
+        .attr("width", 15)
+        .attr("height", 15)
         .attr("fill", d.color);
 
       legendItem
         .append("text")
-        .attr("x", 30)
-        .attr("y", 15)
-        .style("font-size", "14px")
+        .attr("x", 22)
+        .attr("y", 12)
+        .style("font-size", "12px")
         .text(d.region);
     });
+  }
   }, [populationData]);
 
   return <svg ref={chartRef}></svg>;

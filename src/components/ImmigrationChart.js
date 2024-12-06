@@ -36,7 +36,7 @@ const ImmigrationChart = ({ startYear, endYear, size }) => {
     const margin = { top: 25, right: 75, bottom: 50, left: 50 };
 
     if (size=='small') {
-      width=400;
+      width=450;
       height=200;
     } else if(size=='medium') {
       width=500;
@@ -128,12 +128,12 @@ const ImmigrationChart = ({ startYear, endYear, size }) => {
       .attr("text-anchor", "middle")
       .style("font-size", "12px")
       .style("font-weight", "bold")
-      .text("Immigrants vs Native Born in the United States");
+      .text("Population Growth Breakdown");
 
     // Add x-axis label
     svg
       .append("text")
-      .attr("x", width / 2)
+      .attr("x", width / 2 - 12)
       .attr("y", height - 10)
       .attr("text-anchor", "middle")
       .style("font-size", "12px")

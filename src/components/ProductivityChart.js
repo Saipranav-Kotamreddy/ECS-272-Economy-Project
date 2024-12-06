@@ -48,10 +48,10 @@ const ProductivityChart = ({startYear, endYear, size}) => {
   useEffect(() => {
 
     // Set dimensions and margins
-    let width = 400;
+    let width = 850;
     let height = 400;
     if (size=='small') {
-      width = 450;
+      width = 455;
       height=200;
     } else if (size=='medium') {
       width = 650;
@@ -59,14 +59,14 @@ const ProductivityChart = ({startYear, endYear, size}) => {
     }
 
     
-    let margin = { top: 50, right: 190, bottom: 50, left: 50 };
+    let margin = { top: 50, right: 100, bottom: 50, left: 50 };
 
     if(size=='small') {
       margin = { top: 50, right: 100, bottom: 50, left: 50 };
     }
 
     if (size=='medium') {
-      margin = { top: 50, right: 175, bottom: 50, left:50 };
+      margin = { top: 50, right: 160, bottom: 50, left:50 };
     }
 
     const svg = d3
@@ -89,7 +89,7 @@ const ProductivityChart = ({startYear, endYear, size}) => {
       .range([height - margin.bottom, margin.top]);
 
     // Create and add axes
-    const xAxis = d3.axisBottom(xScale).ticks(5);
+    const xAxis = d3.axisBottom(xScale).ticks(5).tickFormat(d3.format("d"));
     const yAxis = d3.axisLeft(yScale).ticks(5);
 
     svg
@@ -150,7 +150,7 @@ const ProductivityChart = ({startYear, endYear, size}) => {
 
     svg
       .append("text")
-      .attr("x", width / 2)
+      .attr("x", width / 2 - 25)
       .attr("y", height - margin.bottom / 4)
       .attr("text-anchor", "middle")
       .style("font-size", "12px")
@@ -166,8 +166,18 @@ const ProductivityChart = ({startYear, endYear, size}) => {
       .text("Percentage");
 
     // Add legend
-    const legend = svg.append("g").attr("transform", `translate(${width - 80},${margin.top})`);
+    
+    let legend = svg.append('g');
+    if (size == 'small') {
+      legend = legend.attr("transform", `translate(${width - 85},${margin.top})`);
+    }
+      else if(size == 'medium') {
+        legend = legend.attr("transform", `translate(${width - 150},${margin.top})`);
+       } else {
+      legend = legend.attr("transform", `translate(${width - 90},${margin.top})`);
 
+    }
+    
     legend
       .append("rect")
       .attr("x", 0)
