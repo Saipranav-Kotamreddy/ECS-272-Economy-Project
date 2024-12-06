@@ -1,3 +1,18 @@
+# Overview
+This project shows how the American economy and workforce have transformed over the past two centuries. It begins with an introduction of each component before opening up the full interactive visualization.
+
+# Guided Introduction
+Click on the right and left arrows to navigate through the guided introduction.
+
+# Final Visualization
+Click on one of the 3 sections to focus on them.\
+Once you are in a section you can further select one component to focus exclusively on it.\
+Click the zoom out icon on the left to return to the previous state.\
+The carbon emissions and income share components have tooltips.
+
+# How to Run
+Simply enter `npm start` into your terminal!
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
