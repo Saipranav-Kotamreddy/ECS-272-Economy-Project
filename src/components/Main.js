@@ -218,26 +218,10 @@ const Main = () => {
 	let caption7 = 'Technological advancements such as computers made workers more productive. Traditionally this was thought to increase wages. However in recent decades wages have stagnated while productivity has increased significantly. This will only become a larger issue with the emergance of Artificial Inteligence in the workplace.'
 	
 	if (page == 0) {
-<<<<<<< Updated upstream
-		return <div className='col'>
-			<div id='1' className={`fade-out ${visible1 ? '' : 'hidden'} ${focus1 ? 'focused1' : ''}`} onClick={show1}>
-				<IndustryChart  className='industry' startYear={1840} endYear={2000} size='small' animated={false} />
-			</div>	
-			<div className='row'>
-					<div id='2' className={`col fade-out ${visible2 ? '' : 'hidden'} ${focus2 ? 'focused2' : ''}`} onClick={show2}>
-						<div className='row2'>
-							<UrbanChart period={'1810'} size='small'/>
-							<UrbanChart period={'1900'} size='small'/>
-						</div>
-						<ImmigrationChart startYear={1790} endYear={1900} size='small'/>	
-						<CarbonChart startYear={1840} endYear={1910} size='small'/>
-										
-=======
 		return <div className='row center'>
 					<div className='center2'>
 						<h1>The Economic Evolution of America</h1>
 						<h2>Two Centuries of Progress and Adaptation</h2>
->>>>>>> Stashed changes
 					</div>
 					<button className='nxtbtn' onClick={nextPage}>
 					<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z"/></svg>
@@ -250,11 +234,7 @@ const Main = () => {
 		<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M20 .755l-14.374 11.245 14.374 11.219-.619.781-15.381-12 15.391-12 .609.755z"/></svg></button>
 		<div className='slide col2 full'>
 				<div className='main'>
-<<<<<<< Updated upstream
-				<IndustryChart startYear={1840} endYear={2000}  animated={true}/>
-=======
 				<IndustryChart startYear={1840} endYear={2000} animated={true}/>
->>>>>>> Stashed changes
 				</div>
 			
 			<p>{caption1a}</p>
@@ -413,32 +393,6 @@ const Main = () => {
 				<button className='nxtbtn' onClick={nextPage}>
 				<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 .755l14.374 11.245-14.374 11.219.619.781 15.381-12-15.391-12-.609.755z"/></svg>
 				</button>
-<<<<<<< Updated upstream
-			</div>		
-	} else if (page == 8) {
-		return <div className='col'>
-				<IndustryChart id='1' className='industry' startYear={1840} endYear={2000} size='small'  animated={false} onClick={show1}/>
-				<div className='row'>
-					<div id='2' className='col' onClick={show2}>
-						<div className='row2'>
-							<UrbanChart period={'1810'} size='small'/>
-							<UrbanChart period={'1900'} size='small'/>
-						</div>
-						<ImmigrationChart startYear={1790} endYear={1900} size='small'/>	
-						<CarbonChart startYear={1840} endYear={1910} size='small'/>
-										
-					</div>
-					<div id='3' className='col' onClick={show3}>
-						<div className='row2'>
-							<GenderChart period={(parseInt('1810')+110).toString()} size='small'/>
-							<GenderChart period={(parseInt('1900')+110).toString()} size='small'/>
-						</div>
-						
-						<IncomeChart startYear={1950} endYear={2000} size='small'/>
-						<ProductivityChart startYear={1950} endYear={2010} size='small'/>					
-					</div>
-=======
->>>>>>> Stashed changes
 				</div>
 			</div>		
 	} else if (page == 11) {

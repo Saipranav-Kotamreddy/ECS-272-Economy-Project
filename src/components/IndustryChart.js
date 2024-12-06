@@ -129,11 +129,7 @@ const IndustryChart = ({ startYear, endYear, size, animated }) => {
           .attr("stroke-width", 0.5);
 
         index++;
-<<<<<<< Updated upstream
-      }, 500);
-=======
       }, 100);
->>>>>>> Stashed changes
     } else {
       chartGroup
         .selectAll(".layer")
@@ -164,11 +160,7 @@ const IndustryChart = ({ startYear, endYear, size, animated }) => {
       .attr("text-anchor", "middle")
       .style("font-size", "16px")
       .style("font-weight", "bold")
-<<<<<<< Updated upstream
-      .text("Industry Employment Rate per Decade");
-=======
       .text("US Labor Force By Sector");
->>>>>>> Stashed changes
 
     chartGroup
       .append("text")
